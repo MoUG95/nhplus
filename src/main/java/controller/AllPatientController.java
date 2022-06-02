@@ -36,7 +36,7 @@ public class AllPatientController {
     private TableColumn<Patient, String> colRoom;
 
     @FXML
-    Button btnLock;
+    Button btnTreatmentEnd;
     @FXML
     Button btnAdd;
     @FXML

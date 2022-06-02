@@ -57,8 +57,6 @@
             <HBox alignment="TOP_CENTER" prefWidth="260" spacing="10.0">
                <children>
                   <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#handleAdd" prefWidth="100.0" text="Hinzufügen" />
-                  <!--<Button fx:id="btnLock" mnemonicParsing="false" onAction="#handleLock" prefWidth="90.0" text="Sperren" />
-                   -->
                    <Button fx:id="btnTreatmentEnd" mnemonicParsing="false" onAction="#handleTreatmentEnd" prefWidth="150" text="Behandlungsende" />
                </children>
             </HBox>
