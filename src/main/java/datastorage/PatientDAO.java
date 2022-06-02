@@ -5,6 +5,7 @@ import utils.DateConverter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -115,5 +116,10 @@ public class PatientDAO extends DAOimp<Patient> {
     @Override
     protected String getDeleteStatementString(long key) {
         return String.format("Delete FROM patient WHERE pid=%d", key);
+    }
+
+    public void lockAndSetDate(long key, LocalDate date) throws SQLException{
+        Statement st = conn.createStatement();
+        st.executeUpdate(String.format("UPDATE patient SET delflag = 'x', treatmentend = '%s' WHERE pid= %d", date, key));
     }
 }
