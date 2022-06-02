@@ -161,16 +161,33 @@ public class AllPatientController {
         }
     }
 
+//    /**
+//     * handles a delete-click-event. Calls the delete methods in the {@link PatientDAO} and {@link TreatmentDAO}
+//     */
+//    @FXML
+//    public void handleLock() {
+//        TreatmentDAO tDao = DAOFactory.getDAOFactory().createTreatmentDAO();
+//        Patient selectedItem = this.tableView.getSelectionModel().getSelectedItem();
+//        try {
+//            tDao.lockByPid(selectedItem.getPid());
+//            dao.lockById(selectedItem.getPid());
+//            this.tableView.getItems().remove(selectedItem);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
     /**
-     * handles a delete-click-event. Calls the delete methods in the {@link PatientDAO} and {@link TreatmentDAO}
+     * handles a treatmendEnd-click-event. Calls the lock methods in the {@link PatientDAO} and {@link TreatmentDAO}
      */
     @FXML
-    public void handleLock() {
+    public void handleTreatmentEnd(){
         TreatmentDAO tDao = DAOFactory.getDAOFactory().createTreatmentDAO();
         Patient selectedItem = this.tableView.getSelectionModel().getSelectedItem();
+        LocalDate date_now = LocalDate.now();
         try {
             tDao.lockByPid(selectedItem.getPid());
-            dao.lockById(selectedItem.getPid());
+            dao.lockAndSetDate(selectedItem.getPid(), date_now);
             this.tableView.getItems().remove(selectedItem);
         } catch (SQLException e) {
             e.printStackTrace();
