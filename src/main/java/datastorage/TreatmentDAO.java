@@ -27,7 +27,7 @@ public class TreatmentDAO extends DAOimp<Treatment> {
 
     @Override
     protected String getReadByIDStatementString(long key) {
-        return String.format("SELECT * FROM treatment WHERE tid = %d", key);
+        return String.format("SELECT * FROM treatment WHERE tid = %d AND delflag is null", key);
     }
 
     @Override
@@ -88,8 +88,18 @@ public class TreatmentDAO extends DAOimp<Treatment> {
         return String.format("SELECT * FROM treatment WHERE pid = %d", pid);
     }
 
+    @Override
+    protected String getLockStatementString(long key) {
+        return String.format("UPDATE treatment SET delflag = 'x' WHERE tid=%d", key);
+    }
+
     public void deleteByPid(long key) throws SQLException {
         Statement st = conn.createStatement();
         st.executeUpdate(String.format("Delete FROM treatment WHERE pid= %d", key));
+    }
+
+    public void lockByPid(long key) throws SQLException {
+        Statement st = conn.createStatement();
+        st.executeUpdate(String.format("UPDATE treatment SET delflag = 'x' WHERE pid= %d", key));
     }
 }
