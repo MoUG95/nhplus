@@ -41,7 +41,7 @@ public class AllCaregiverController {
     @FXML
     Button btnAdd;
     @FXML
-    Button btnDelete;
+    Button btnLock;
 
     private CaregiverDAO dao;
     private ObservableList<Caregiver> tableviewContent = FXCollections.observableArrayList();
@@ -132,10 +132,10 @@ public class AllCaregiverController {
      * handles a delete-click-event. Calls the delete methods in the {@link CaregiverDAO}
      */
     @FXML
-    public void handleDeleteRow() {
+    public void handleLock() {
         Caregiver selectedItem = this.tableView.getSelectionModel().getSelectedItem();
         try {
-            dao.deleteById(selectedItem.getCid());
+            dao.lockById(selectedItem.getCid());
             this.tableView.getItems().remove(selectedItem);
         } catch (SQLException e) {
             e.printStackTrace();

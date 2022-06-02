@@ -38,6 +38,10 @@ public class AllTreatmentController {
     private TableColumn<Treatment, String> colCaregiver;
     @FXML
     private ComboBox<String> comboBox;
+    @FXML
+    Button btnLock;
+    @FXML
+    Button btnNewTreament;
 
     private ObservableList<Treatment> tableviewContent =
             FXCollections.observableArrayList();
@@ -132,12 +136,12 @@ public class AllTreatmentController {
     }
 
     @FXML
-    public void handleDelete(){
+    public void handleLock(){
         int index = this.tableView.getSelectionModel().getSelectedIndex();
         Treatment t = this.tableviewContent.remove(index);
         TreatmentDAO dao = DAOFactory.getDAOFactory().createTreatmentDAO();
         try {
-            dao.deleteById(t.getTid());
+            dao.lockById(t.getTid());
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -38,7 +38,7 @@ public class CaregiverDAO extends DAOimp<Caregiver> {
      */
     @Override
     protected String getReadByIDStatementString(long key) {
-        return String.format("SELECT * FROM caregiver WHERE cid = %d AND delflag is null", key);
+        return String.format("SELECT * FROM caregiver WHERE cid = %d", key);
     }
 
     /**
@@ -60,7 +60,7 @@ public class CaregiverDAO extends DAOimp<Caregiver> {
      */
     @Override
     protected String getReadAllStatementString() {
-        return "SELECT * FROM caregiver WHERE delflag is null";
+        return "SELECT * FROM caregiver";
     }
 
     /**
@@ -92,13 +92,23 @@ public class CaregiverDAO extends DAOimp<Caregiver> {
     }
 
     /**
+     * generates a <code>lock</code>-Statement for a given key
+     * @param key for which a specific UPDATE (set flag for locked data) is to be created
+     * @return <code>String</code> with the generated SQL.
+     */
+    @Override
+    protected String getLockStatementString(long key) {
+        return String.format("UPDATE caregiver SET delflag = 'x' WHERE cid=%d", key);
+    }
+
+    /**
      * generates a <code>delete</code>-Statement for a given key
      * @param key for which a specific DELETE is to be created
      * @return <code>String</code> with the generated SQL.
      */
     @Override
     protected String getDeleteStatementString(long key) {
-        return String.format("UPDATE caregiver SET delflag = 'x' WHERE cid=%d", key);
+        return String.format("Delete FROM patient WHERE pid=%d", key);
     }
 
 }

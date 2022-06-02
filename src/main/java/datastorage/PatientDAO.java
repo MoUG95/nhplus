@@ -98,6 +98,16 @@ public class PatientDAO extends DAOimp<Patient> {
     }
 
     /**
+     * generates a <code>lock</code>-Statement for a given key
+     * @param key for which a specific UPDATE (set flag for locked data) is to be created
+     * @return <code>String</code> with the generated SQL.
+     */
+    @Override
+    protected String getLockStatementString(long key) {
+        return String.format("UPDATE patient SET delflag = 'x' WHERE pid=%d", key);
+    }
+
+    /**
      * generates a <code>delete</code>-Statement for a given key
      * @param key for which a specific DELETE is to be created
      * @return <code>String</code> with the generated SQL.
