@@ -49,8 +49,6 @@ public class AllPatientController {
     TextField txtCarelevel;
     @FXML
     TextField txtRoom;
-    @FXML
-    private TextField txtAssets;
 
     private ObservableList<Patient> tableviewContent = FXCollections.observableArrayList();
     private PatientDAO dao;
@@ -195,7 +193,6 @@ public class AllPatientController {
             dao.create(p);
         } catch (SQLException e) {
             e.printStackTrace();
-
         }
         readAllAndShowInTableView();
         clearTextfields();
