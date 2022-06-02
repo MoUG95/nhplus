@@ -35,11 +35,9 @@ public class AllTreatmentController {
     @FXML
     private TableColumn<Treatment, String> colDescription;
     @FXML
+    private TableColumn<Treatment, String> colCaregiver;
+    @FXML
     private ComboBox<String> comboBox;
-    @FXML
-    private Button btnNewTreatment;
-    @FXML
-    private Button btnDelete;
 
     private ObservableList<Treatment> tableviewContent =
             FXCollections.observableArrayList();
@@ -61,14 +59,15 @@ public class AllTreatmentController {
         this.colBegin.setCellValueFactory(new PropertyValueFactory<Treatment, String>("begin"));
         this.colEnd.setCellValueFactory(new PropertyValueFactory<Treatment, String>("end"));
         this.colDescription.setCellValueFactory(new PropertyValueFactory<Treatment, String>("description"));
+        this.colCaregiver.setCellValueFactory(new PropertyValueFactory<Treatment, String>("caregiver"));
         this.tableView.setItems(this.tableviewContent);
         createComboBoxData();
     }
 
     public void readAllAndShowInTableView() {
-        this.tableviewContent.clear();
         comboBox.getSelectionModel().select(0);
         this.dao = DAOFactory.getDAOFactory().createTreatmentDAO();
+        this.tableviewContent.clear();
         List<Treatment> allTreatments;
         try {
             allTreatments = dao.readAll();
