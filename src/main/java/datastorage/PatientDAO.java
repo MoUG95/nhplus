@@ -5,6 +5,7 @@ import utils.DateConverter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -98,6 +99,16 @@ public class PatientDAO extends DAOimp<Patient> {
     }
 
     /**
+     * generates a <code>lock</code>-Statement for a given key
+     * @param key for which a specific UPDATE (set flag for locked data) is to be created
+     * @return <code>String</code> with the generated SQL.
+     */
+    @Override
+    protected String getLockStatementString(long key) {
+        return String.format("UPDATE patient SET delflag = 'x' WHERE pid=%d", key);
+    }
+
+    /**
      * generates a <code>delete</code>-Statement for a given key
      * @param key for which a specific DELETE is to be created
      * @return <code>String</code> with the generated SQL.
@@ -105,5 +116,10 @@ public class PatientDAO extends DAOimp<Patient> {
     @Override
     protected String getDeleteStatementString(long key) {
         return String.format("Delete FROM patient WHERE pid=%d", key);
+    }
+
+    public void lockAndSetDate(long key, LocalDate date) throws SQLException{
+        Statement st = conn.createStatement();
+        st.executeUpdate(String.format("UPDATE patient SET delflag = 'x', treatmentend = '%s' WHERE pid= %d", date, key));
     }
 }
