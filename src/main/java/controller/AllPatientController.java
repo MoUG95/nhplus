@@ -171,7 +171,7 @@ public class AllPatientController {
         LocalDate date_now = LocalDate.now();
         try {
             tDao.lockByPid(selectedItem.getPid());
-            dao.lockAndSetDate(selectedItem.getPid(), date_now);
+            dao.lockById(selectedItem.getPid());
             this.tableView.getItems().remove(selectedItem);
         } catch (SQLException e) {
             e.printStackTrace();
