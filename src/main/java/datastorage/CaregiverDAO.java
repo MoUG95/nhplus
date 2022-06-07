@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Implements the Interface <code>DAOImp</code>. Overrides methods to generate specific patient-SQL-queries.
+ * Implements the Interface <code>DAOImp</code>. Overrides methods to generate specific caregiver-SQL-queries.
  */
 public class CaregiverDAO extends DAOimp<Caregiver> {
 

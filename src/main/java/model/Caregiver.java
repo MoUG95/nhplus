@@ -34,10 +34,17 @@ public class Caregiver extends Person {
         return cid;
     }
 
+    /**
+     * @return caregiver telephone number
+     */
     public String getTelephoneNr(){
         return telephoneNr;
     }
 
+    /**
+     * set caregiver telephone number
+     * @param telephoneNr
+     */
     public void setTelephoneNr(String telephoneNr){
         this.telephoneNr = telephoneNr;
     }

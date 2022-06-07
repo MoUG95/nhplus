@@ -129,7 +129,7 @@ public class AllCaregiverController {
     }
 
     /**
-     * handles a delete-click-event. Calls the delete methods in the {@link CaregiverDAO}
+     * handles a lock-click-event. Calls the lock methods in the {@link CaregiverDAO}
      */
     @FXML
     public void handleLock() {
