@@ -142,7 +142,7 @@ public class AllPatientController {
     private void doUpdate(TableColumn.CellEditEvent<Patient, String> t) {
         try {
             dao.update(t.getRowValue());
-        } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -159,7 +159,7 @@ public class AllPatientController {
             for (Patient p : allPatients) {
                 this.tableviewContent.add(p);
             }
-        } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -195,7 +195,7 @@ public class AllPatientController {
         try {
             Patient p = new Patient(firstname, surname, date, carelevel, room);
             dao.create(p);
-        } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         readAllAndShowInTableView();

@@ -35,6 +35,8 @@ public class MainWindowController {
     @FXML
     public TextField txtId;
     @FXML
+    public Button btnCaregiver;
+    @FXML
     public PasswordField txtPassword;
     @FXML
     public Label txtLogging;
@@ -117,8 +119,7 @@ public class MainWindowController {
         User user;
         boolean found = false;
 
-
-            UserDAO userDAO = DAOFactory.getDAOFactory().createUserDAO();
+        UserDAO userDAO = DAOFactory.getDAOFactory().createUserDAO();
         try {
             PreparedStatement passwordStatement = userDAO.getPasswordByUidStatementString(tempId);
             ResultSet rs = passwordStatement.executeQuery();
@@ -155,6 +156,7 @@ public class MainWindowController {
             txtLogging.setVisible(false);
             btnTreatment.setVisible(true);
             btnPatient.setVisible(true);
+            btnCaregiver.setVisible(true);
             btnLogout.setVisible(true);
             txtWrong.setVisible(false);
         }
@@ -169,6 +171,7 @@ public class MainWindowController {
             btnTreatment.setVisible(false);
             btnUser.setVisible(false);
             btnPatient.setVisible(false);
+            btnCaregiver.setVisible(false);
             btnLogout.setVisible(false);
         }
     }

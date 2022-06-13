@@ -46,7 +46,7 @@ public class UserDAO extends DAOimp<User>{
 
 
     public PreparedStatement getPasswordByUidStatementString(String key) throws SQLException {
-        PreparedStatement ps = conn.prepareStatement("select password from User where uid = ?");
+        PreparedStatement ps = conn.prepareStatement("select password from User where uid = ? AND delflag is null");
         ps.setString(1, key);
         return ps;
     }
@@ -77,7 +77,7 @@ public class UserDAO extends DAOimp<User>{
      * @return ArrayList with users from the resultSet.
      */
     @Override
-    protected ArrayList<User> getListFromResultSet(ResultSet result) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
+    protected ArrayList<User> getListFromResultSet(ResultSet result) throws SQLException{
         ArrayList<User> list = new ArrayList<User>();
         User u = null;
         while (result.next()) {
@@ -109,6 +109,16 @@ public class UserDAO extends DAOimp<User>{
         return String.format("Delete FROM user WHERE uid=%d", key);
     }
 
+    /**
+     * generates a <code>lock</code>-statement for a given key
+     * @param key for which a specific UPDATE (set flag for locked data) is to be created
+     * @return <code>String</code> with the generated SQL.
+     */
+    @Override
+    protected String getLockStatementString(long key) {
+        return String.format("UPDATE user SET delflag = 'x' WHERE uid=%d", key);
+    }
+
     public User readByUid(String uid) throws SQLException {
         User object = null;
         Statement st = conn.createStatement();
@@ -120,7 +130,7 @@ public class UserDAO extends DAOimp<User>{
     }
 
     private PreparedStatement getReadByUid(String uid) throws SQLException {
-        PreparedStatement ps = conn.prepareStatement("SELECT * FROM user WHERE uid = ?");
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM user WHERE uid = ? AND delflag is null");
         ps.setString(1, uid);
         return ps;
     }

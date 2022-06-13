@@ -120,7 +120,7 @@ public class AllUserController {
     private void doStringUpdate(TableColumn.CellEditEvent<User, String> t) {
         try {
             dao.update(t.getRowValue());
-        } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -128,7 +128,7 @@ public class AllUserController {
     private void doIntUpdate(TableColumn.CellEditEvent<User, Integer> t) {
         try {
             dao.update(t.getRowValue());
-        } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -143,7 +143,7 @@ public class AllUserController {
         try {
             allUsers = dao.readAll();
             this.tableviewContent.addAll(allUsers);
-        } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -176,7 +176,7 @@ public class AllUserController {
         try {
             User u = new User(firstname, surname, permissionLevel, password);
             dao.create(u);
-        } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
 
         }

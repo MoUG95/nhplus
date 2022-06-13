@@ -48,7 +48,7 @@ public class TreatmentController {
             this.patient = pDao.read((int) treatment.getPid());
             this.treatment = treatment;
             showData();
-        } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -80,7 +80,7 @@ public class TreatmentController {
         TreatmentDAO dao = DAOFactory.getDAOFactory().createTreatmentDAO();
         try {
             dao.update(treatment);
-        } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

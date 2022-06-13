@@ -29,7 +29,7 @@ public class PatientDAO extends DAOimp<Patient> {
      */
     @Override
     protected String getCreateStatementString(Patient patient) {
-        return String.format("INSERT INTO patient (firstname, surname, dateOfBirth, carelevel, roomnumber) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')",
+        return String.format("INSERT INTO patient (firstname, surname, dateOfBirth, carelevel, roomnumber) VALUES ('%s', '%s', '%s', '%s', '%s')",
                 patient.getFirstName(), patient.getSurname(), patient.getDateOfBirth(), patient.getCareLevel(), patient.getRoomnumber());
     }
 

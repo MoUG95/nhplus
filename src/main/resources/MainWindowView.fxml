@@ -22,13 +22,9 @@
               </rowConstraints>
                <children>
                   <Button fx:id="btnTreatment" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleShowAllTreatments" prefWidth="105.0" text="Behandlungen" visible="false" GridPane.rowIndex="1" />
-                  <Button fx:id="btnPatient" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleShowAllPatient" prefWidth="105.0" text="Patienten/innen" visible="false" GridPane.rowIndex="2">
-                  <Button fx:id="btnCaregiver" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleShowAllCaregivers" prefWidth="105.0" text="Pfleger/innen" visible="false" GridPane.rowIndex="2">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </Button>
-                  <Button fx:id="btnUser" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleShowAllUsers" prefWidth="105.0" text="User" visible="false" GridPane.rowIndex="3" />
+                  <Button fx:id="btnPatient" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleShowAllPatient" prefWidth="105.0" text="Patienten/innen" visible="false" GridPane.rowIndex="2"/>
+                  <Button fx:id="btnCaregiver" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleShowAllCaregivers" prefWidth="105.0" text="Pfleger/innen" visible="false" GridPane.rowIndex="3"/>
+                  <Button fx:id="btnUser" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleShowAllUsers" prefWidth="105.0" text="User" visible="false" GridPane.rowIndex="4" />
                   <Button fx:id="btnLogout" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleLogout" prefWidth="105.0" text="Logout" textAlignment="CENTER" visible="false" GridPane.rowIndex="5">
                      <GridPane.margin>
                         <Insets bottom="20.0" />

@@ -21,15 +21,15 @@ public class TreatmentDAO extends DAOimp<Treatment> {
 
     @Override
     protected String getCreateStatementString(Treatment treatment) {
-        return String.format("INSERT INTO treatment (pid, treatment_date, begin, end, description, remarks, caregiver, uid) VALUES " +
-                "(%d, '%s', '%s', '%s', '%s', '%s', '%s', '%s')", treatment.getPid(), treatment.getDate(),
+        return String.format("INSERT INTO treatment (pid, treatment_date, begin, end, description, remarks, caregiver) VALUES " +
+                "(%d, '%s', '%s', '%s', '%s', '%s', '%s')", treatment.getPid(), treatment.getDate(),
                 treatment.getBegin(), treatment.getEnd(), treatment.getDescription(),
-                 treatment.getRemarks(), treatment.getCaregiver(),user.getUid());
+                 treatment.getRemarks(), treatment.getCaregiver());
     }
 
     @Override
     protected String getReadByIDStatementString(long key) {
-        return String.format("SELECT * FROM treatment WHERE tid = %d AND delflag is null", key);
+        return String.format("SELECT * FROM treatment WHERE tid = %d", key);
     }
 
     @Override
