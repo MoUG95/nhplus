@@ -9,6 +9,9 @@ import javafx.stage.Stage;
 import model.Patient;
 import model.Treatment;
 import utils.DateConverter;
+
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
@@ -45,7 +48,7 @@ public class TreatmentController {
             this.patient = pDao.read((int) treatment.getPid());
             this.treatment = treatment;
             showData();
-        } catch (SQLException e) {
+        } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
             e.printStackTrace();
         }
     }
@@ -77,7 +80,7 @@ public class TreatmentController {
         TreatmentDAO dao = DAOFactory.getDAOFactory().createTreatmentDAO();
         try {
             dao.update(treatment);
-        } catch (SQLException e) {
+        } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
             e.printStackTrace();
         }
     }

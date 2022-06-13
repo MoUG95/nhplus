@@ -7,6 +7,7 @@ import java.time.LocalTime;
 public class Treatment {
     private long tid;
     private long pid;
+    private long uid;
     private LocalDate date;
     private LocalTime begin;
     private LocalTime end;
@@ -14,21 +15,10 @@ public class Treatment {
     private String remarks;
     private String caregiver;
 
-    public Treatment(long pid, LocalDate date, LocalTime begin,
+    public Treatment(long pid, long uid, LocalDate date, LocalTime begin,
                      LocalTime end, String description, String remarks, String caregiver) {
         this.pid = pid;
-        this.date = date;
-        this.begin = begin;
-        this.end = end;
-        this.description = description;
-        this.remarks = remarks;
-        this.caregiver = caregiver;
-    }
-
-    public Treatment(long tid, long pid, LocalDate date, LocalTime begin,
-                     LocalTime end, String description, String remarks, String caregiver) {
-        this.tid = tid;
-        this.pid = pid;
+        this.uid = uid;
         this.date = date;
         this.begin = begin;
         this.end = end;
@@ -39,12 +29,26 @@ public class Treatment {
 
     public String getCaregiver(){return this.caregiver;}
 
+    public Treatment(long pid, LocalDate date, LocalTime begin, LocalTime end, String description, String remarks, String caregiver) {
+        this.pid = pid;
+        this.date = date;
+        this.begin = begin;
+        this.end = end;
+        this.description = description;
+        this.remarks = remarks;
+        this.caregiver = caregiver;
+    }
+
     public long getTid() {
         return tid;
     }
 
     public long getPid() {
         return this.pid;
+    }
+
+    public long getUid() {
+        return uid;
     }
 
     public String getDate() {
