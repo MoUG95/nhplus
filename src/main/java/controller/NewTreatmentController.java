@@ -73,7 +73,6 @@ public class NewTreatmentController {
         }
     }
 
-
     @FXML
     public void handleAdd(){
         LocalDate date = this.datepicker.getValue();
@@ -94,7 +93,7 @@ public class NewTreatmentController {
         TreatmentDAO dao = DAOFactory.getDAOFactory().createTreatmentDAO();
         try {
             dao.create(treatment);
-        } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
