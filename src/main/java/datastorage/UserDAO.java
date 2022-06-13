@@ -1,6 +1,7 @@
 package datastorage;
 
 import model.User;
+import utils.BCryptHashing;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
