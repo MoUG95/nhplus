@@ -21,14 +21,14 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" />
               </rowConstraints>
                <children>
-                  <Button fx:id="btnTreatment" alignment="CENTER" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#handleShowAllTreatments" prefWidth="105.0" text="Treatments" visible="false" GridPane.rowIndex="1" />
-                  <Button fx:id="btnUser" alignment="CENTER" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#handleShowAllUsers" prefWidth="105.0" text="User" visible="false" GridPane.rowIndex="2" />
-                  <Button fx:id="btnPatient" alignment="CENTER" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#handleShowAllPatient" prefWidth="105.0" text="Patients" visible="false" GridPane.rowIndex="3">
+                  <Button fx:id="btnTreatment" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleShowAllTreatments" prefWidth="105.0" text="Treatments" visible="false" GridPane.rowIndex="1" />
+                  <Button fx:id="btnPatient" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleShowAllPatient" prefWidth="105.0" text="Patients" visible="false" GridPane.rowIndex="2">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
                   </Button>
-                  <Button fx:id="btnLogout" alignment="CENTER" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#handleLogout" prefWidth="105.0" text="Logout" textAlignment="CENTER" visible="false" GridPane.rowIndex="5">
+                  <Button fx:id="btnUser" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleShowAllUsers" prefWidth="105.0" text="User" visible="false" GridPane.rowIndex="3" />
+                  <Button fx:id="btnLogout" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleLogout" prefWidth="105.0" text="Logout" textAlignment="CENTER" visible="false" GridPane.rowIndex="5">
                      <GridPane.margin>
                         <Insets bottom="20.0" />
                      </GridPane.margin>
@@ -51,7 +51,7 @@
                 <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" />
             </rowConstraints>
             <children>
-                <TextField fx:id="txtUsername" alignment="CENTER" prefHeight="25.0" prefWidth="265.0" promptText="Enter your Username" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <TextField fx:id="txtId" alignment="CENTER" prefHeight="25.0" prefWidth="265.0" promptText="Enter your ID" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                 <PasswordField fx:id="txtPassword" alignment="CENTER" prefHeight="25.0" prefWidth="265.0" promptText="Enter your password" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <GridPane.margin>
                         <Insets top="60.0" />
@@ -72,7 +72,7 @@
                         <Insets top="120.0" />
                     </GridPane.margin>
                 </Label>
-                <Button fx:id="btnLogin" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#FireClickEvent" prefWidth="105.0" text="Login" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <Button fx:id="btnLogin" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleLogin" prefWidth="105.0" text="Login" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <GridPane.margin>
                         <Insets left="80.0" top="200.0" />
                     </GridPane.margin></Button>

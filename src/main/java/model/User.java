@@ -1,9 +1,6 @@
 package model;
 
-import utils.PBKDF2WithHmacSHA1;
-
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
+import utils.BCryptHashing;
 
 /**
  *Users are Employees (Nurses, IT,...)
@@ -23,17 +20,17 @@ public class User extends Person{
      * @param permissionLevel
      * @param password
      */
-    public User(long uid,String firstName, String surname, int permissionLevel, String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public User(long uid,String firstName, String surname, int permissionLevel, String password) {
         super(firstName, surname);
         this.uid = uid;
         this.permissionLevel = permissionLevel;
-        this.password = PBKDF2WithHmacSHA1.generateStorngPasswordHash(password);
+        this.password = password;
     }
 
-    public User(String firstname, String surname, int permissionLevel, String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public User(String firstname, String surname, int permissionLevel, String password){
         super(firstname,surname);
         this.permissionLevel = permissionLevel;
-        this.password = PBKDF2WithHmacSHA1.generateStorngPasswordHash(password);
+        this.password = password;
     }
 
     public User() {
@@ -57,9 +54,9 @@ public class User extends Person{
     /**
      * Return User Password
      */
-    public String getPassword() throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public String getPassword() {
 
-        return PBKDF2WithHmacSHA1.generateStorngPasswordHash(this.password);
+        return this.password;
     }
 
     public void setPassword(String password) {

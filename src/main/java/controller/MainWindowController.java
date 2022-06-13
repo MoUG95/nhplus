@@ -1,5 +1,7 @@
 package controller;
 
+import datastorage.DAOFactory;
+import datastorage.UserDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,11 +11,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import utils.PBKDF2WithHmacSHA1;
+import model.User;
+import model.UserSession;
+import utils.BCryptHashing;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.sql.*;
 
 public class MainWindowController {
@@ -31,7 +33,7 @@ public class MainWindowController {
     @FXML
     public Button btnLogout;
     @FXML
-    public TextField txtUsername;
+    public TextField txtId;
     @FXML
     public PasswordField txtPassword;
     @FXML
@@ -90,80 +92,73 @@ public class MainWindowController {
         if(MainWindowBorderPaneCenter != null) {
             mainBorderPane.setCenter(MainWindowBorderPaneCenter);
         }
-        HandleButtons();
+        boolean status = true;
+        UserSession userSession = UserSession.getInstance();
+        userSession.clear();
+        HandleButtons(status);
     }
 
-    public void FireClickEvent(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, NoSuchAlgorithmException, InvalidKeySpecException {
+    public void handleLogin(ActionEvent actionEvent) throws SQLException {
 
-        String tempUser = txtUsername.getText();
+        String tempId = txtId.getText();
         String tempPass = txtPassword.getText();
 
+        User user;
         boolean found = false;
 
-            Class.forName("org.hsqldb.jdbc.JDBCDriver");
-            Connection conn = DriverManager.getConnection("jdbc:hsqldb:db/nursingHomeDB;user=SA;password=SA");
-            PreparedStatement ps = conn.prepareStatement("select * from User where password = ?");
 
-           ps.setString(1, PBKDF2WithHmacSHA1.generateStorngPasswordHash(tempPass));
+            UserDAO userDAO = DAOFactory.getDAOFactory().createUserDAO();
+        try {
+            PreparedStatement passwordStatement = userDAO.getPasswordByUidStatementString(tempId);
+            ResultSet rs = passwordStatement.executeQuery();
 
-            ResultSet results = ps.executeQuery();
-
-            // User = a1 Passwort = 1111
-            int cnt = 0;
-
-            if(results.next()){
-                cnt = results.getInt(1);
+            if (rs.next()) {
+                found = BCryptHashing.isValidPassword(tempPass, rs.getString(1));
             }
-            if(cnt > 0){
-                found = true;
-            }
+        }catch(Exception e){
+            txtWrong.setVisible(true);
+        }
+
+        user = userDAO.readByUid(tempId);
+        UserSession userSession = UserSession.getInstance();
+        userSession.init(user);
 
             if (found) {
-                btnUser.setDisable(false);
-                btnLogout.setDisable(false);
-                btnPatient.setDisable(false);
-                btnTreatment.setDisable(false);
-                btnLogin.setDisable(true);
-                txtUsername.setDisable(true);
-                txtPassword.setDisable(true);
-
-
-                btnLogin.setVisible(false);
-                txtUsername.setVisible(false);
-                txtPassword.setVisible(false);
-                txtLogging.setVisible(false);
-                btnTreatment.setVisible(true);
-                btnUser.setVisible(true);
-                btnPatient.setVisible(true);
-                btnLogout.setVisible(true);
-                txtWrong.setVisible(false);
+                boolean status = false;
+                if(userSession.getPermissionLevel() == 1){
+                    btnUser.setVisible(true);
+                }
+                HandleButtons(status);
             } else {
                 txtWrong.setVisible(true);
             }
         }
 
 
-    public void HandleButtons() {
+    public void HandleButtons(boolean status) {
 
-        btnUser.setDisable(true);
-        btnLogout.setDisable(true);
-        btnPatient.setDisable(true);
-        btnTreatment.setDisable(true);
-        btnLogin.setDisable(false);
-        txtUsername.setDisable(false);
-        txtPassword.setDisable(false);
+        if(!status){
+            btnLogin.setVisible(false);
+            txtId.setVisible(false);
+            txtPassword.setVisible(false);
+            txtLogging.setVisible(false);
+            btnTreatment.setVisible(true);
+            btnPatient.setVisible(true);
+            btnLogout.setVisible(true);
+            txtWrong.setVisible(false);
+        }
 
-        txtPassword.clear();
-        txtUsername.clear();
-
-        btnLogin.setVisible(true);
-        txtUsername.setVisible(true);
-        txtPassword.setVisible(true);
-        txtLogging.setVisible(true);
-        btnTreatment.setVisible(false);
-        btnUser.setVisible(false);
-        btnPatient.setVisible(false);
-        btnLogout.setVisible(false);
-
+        if (status) {
+            txtPassword.clear();
+            txtId.clear();
+            btnLogin.setVisible(true);
+            txtId.setVisible(true);
+            txtPassword.setVisible(true);
+            txtLogging.setVisible(true);
+            btnTreatment.setVisible(false);
+            btnUser.setVisible(false);
+            btnPatient.setVisible(false);
+            btnLogout.setVisible(false);
+        }
     }
 }

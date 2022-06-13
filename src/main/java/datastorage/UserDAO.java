@@ -4,9 +4,7 @@ import model.User;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 /**
@@ -30,9 +28,9 @@ public class UserDAO extends DAOimp<User>{
      * @return <code>String</code> with the generated SQL.
      */
     @Override
-    protected String getCreateStatementString(User user) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        return String.format("INSERT INTO user (uid, firstname, surname, permissionLevel, password) VALUES ('%s', '%s', '%s', '%s', '%s')",
-                user.getUid(), user.getFirstName(), user.getSurname(), user.getPermissionLevel(), user.getPassword());
+    protected String getCreateStatementString(User user) {
+        return String.format("INSERT INTO user ( firstname, surname, permissionLevel, password) VALUES ('%s', '%s', '%s', '%s')",
+                user.getFirstName(), user.getSurname(), user.getPermissionLevel(), BCryptHashing.hashPassword(user.getPassword()));
     }
 
     /**
@@ -45,13 +43,20 @@ public class UserDAO extends DAOimp<User>{
         return String.format("SELECT * FROM user WHERE uid = %d", key);
     }
 
+
+    public PreparedStatement getPasswordByUidStatementString(String key) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("select password from User where uid = ?");
+        ps.setString(1, key);
+        return ps;
+    }
+
     /**
      * maps a <code>ResultSet</code> to a <code>User</code>
      * @param result ResultSet with a single row. Columns will be mapped to a user-object.
      * @return user with the data from the resultSet.
      */
     @Override
-    protected User getInstanceFromResultSet(ResultSet result) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
+    protected User getInstanceFromResultSet(ResultSet result) throws SQLException {
         return new User(result.getLong(1), result.getString(2), result.getString(3),
                 result.getInt(4), result.getString(5));
     }
@@ -88,7 +93,7 @@ public class UserDAO extends DAOimp<User>{
      * @return <code>String</code> with the generated SQL.
      */
     @Override
-    protected String getUpdateStatementString(User user) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    protected String getUpdateStatementString(User user) {
         return String.format("UPDATE user SET firstname = '%s', surname = '%s',  permissionLevel = '%s', " +
                 "password = '%s' WHERE uid = %s", user.getFirstName(), user.getSurname(), user.getPermissionLevel(), user.getPassword(), user.getUid());
     }
@@ -103,6 +108,21 @@ public class UserDAO extends DAOimp<User>{
         return String.format("Delete FROM user WHERE uid=%d", key);
     }
 
+    public User readByUid(String uid) throws SQLException {
+        User object = null;
+        Statement st = conn.createStatement();
+        ResultSet result = getReadByUid(uid).executeQuery();
+        if (result.next()) {
+            object = getInstanceFromResultSet(result);
+        }
+        return object;
+    }
+
+    private PreparedStatement getReadByUid(String uid) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM user WHERE uid = ?");
+        ps.setString(1, uid);
+        return ps;
+    }
 
 
 }
