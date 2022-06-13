@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class ConnectionBuilder {
     private static Connection conn;
 
-    private ConnectionBuilder() {
+    public ConnectionBuilder() {
         try {
             Class.forName("org.hsqldb.jdbc.JDBCDriver");
             System.out.println("Working Directory = " + System.getProperty("user.dir"));

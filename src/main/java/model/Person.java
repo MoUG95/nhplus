@@ -9,6 +9,10 @@ public abstract class Person {
         this.surname = surname;
     }
 
+    public Person() {
+
+    }
+
     public String getFirstName() {
         return firstName;
     }

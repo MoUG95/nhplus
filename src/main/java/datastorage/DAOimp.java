@@ -1,5 +1,7 @@
 package datastorage;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,13 +17,13 @@ public abstract class DAOimp<T> implements DAO<T>{
     }
 
     @Override
-    public void create(T t) throws SQLException {
+    public void create(T t) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
         Statement st = conn.createStatement();
         st.executeUpdate(getCreateStatementString(t));
     }
 
     @Override
-    public T read(long key) throws SQLException {
+    public T read(long key) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
         T object = null;
         Statement st = conn.createStatement();
         ResultSet result = st.executeQuery(getReadByIDStatementString(key));
@@ -32,7 +34,7 @@ public abstract class DAOimp<T> implements DAO<T>{
     }
 
     @Override
-    public List<T> readAll() throws SQLException {
+    public List<T> readAll() throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
         ArrayList<T> list = new ArrayList<T>();
         T object = null;
         Statement st = conn.createStatement();
@@ -42,7 +44,7 @@ public abstract class DAOimp<T> implements DAO<T>{
     }
 
     @Override
-    public void update(T t) throws SQLException {
+    public void update(T t) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
         Statement st = conn.createStatement();
         st.executeUpdate(getUpdateStatementString(t));
     }
@@ -53,17 +55,17 @@ public abstract class DAOimp<T> implements DAO<T>{
         st.executeUpdate(getDeleteStatementString(key));
     }
 
-    protected abstract String getCreateStatementString(T t);
+    protected abstract String getCreateStatementString(T t) throws NoSuchAlgorithmException, InvalidKeySpecException;
 
     protected abstract String getReadByIDStatementString(long key);
 
-    protected abstract T getInstanceFromResultSet(ResultSet set) throws SQLException;
+    protected abstract T getInstanceFromResultSet(ResultSet set) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException;
 
     protected abstract String getReadAllStatementString();
 
-    protected abstract ArrayList<T> getListFromResultSet(ResultSet set) throws SQLException;
+    protected abstract ArrayList<T> getListFromResultSet(ResultSet set) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException;
 
-    protected abstract String getUpdateStatementString(T t);
+    protected abstract String getUpdateStatementString(T t) throws NoSuchAlgorithmException, InvalidKeySpecException;
 
     protected abstract String getDeleteStatementString(long key);
 }

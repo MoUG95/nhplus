@@ -14,7 +14,11 @@ import javafx.stage.Stage;
 import model.Patient;
 import model.Treatment;
 import datastorage.DAOFactory;
+import model.User;
+
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +38,8 @@ public class AllTreatmentController {
     private TableColumn<Treatment, String> colEnd;
     @FXML
     private TableColumn<Treatment, String> colDescription;
+    @FXML
+    private TableColumn<User, Integer> colUserID;
     @FXML
     private ComboBox<String> comboBox;
     @FXML
@@ -61,6 +67,7 @@ public class AllTreatmentController {
         this.colBegin.setCellValueFactory(new PropertyValueFactory<Treatment, String>("begin"));
         this.colEnd.setCellValueFactory(new PropertyValueFactory<Treatment, String>("end"));
         this.colDescription.setCellValueFactory(new PropertyValueFactory<Treatment, String>("description"));
+        this.colUserID.setCellValueFactory(new PropertyValueFactory<User, Integer>("UserID"));
         this.tableView.setItems(this.tableviewContent);
         createComboBoxData();
     }
@@ -72,10 +79,8 @@ public class AllTreatmentController {
         List<Treatment> allTreatments;
         try {
             allTreatments = dao.readAll();
-            for (Treatment treatment : allTreatments) {
-                this.tableviewContent.add(treatment);
-            }
-        } catch (SQLException e) {
+            this.tableviewContent.addAll(allTreatments);
+        } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
             e.printStackTrace();
         }
     }
@@ -88,7 +93,7 @@ public class AllTreatmentController {
             for (Patient patient: patientList) {
                 this.myComboBoxData.add(patient.getSurname());
             }
-        }catch(SQLException e){
+        }catch(SQLException | NoSuchAlgorithmException | InvalidKeySpecException e){
             e.printStackTrace();
         }
     }
@@ -103,10 +108,8 @@ public class AllTreatmentController {
         if(p.equals("alle")){
             try {
                 allTreatments= this.dao.readAll();
-                for (Treatment treatment : allTreatments) {
-                    this.tableviewContent.add(treatment);
-                }
-            } catch (SQLException e) {
+                this.tableviewContent.addAll(allTreatments);
+            } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
                 e.printStackTrace();
             }
         }
@@ -114,9 +117,7 @@ public class AllTreatmentController {
         if(patient !=null){
             try {
                 allTreatments = dao.readTreatmentsByPid(patient.getPid());
-                for (Treatment treatment : allTreatments) {
-                    this.tableviewContent.add(treatment);
-                }
+                this.tableviewContent.addAll(allTreatments);
             } catch (SQLException e) {
                 e.printStackTrace();
             }

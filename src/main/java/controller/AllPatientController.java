@@ -11,6 +11,9 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import model.Patient;
 import utils.DateConverter;
 import datastorage.DAOFactory;
+
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
@@ -141,7 +144,7 @@ public class AllPatientController {
     private void doUpdate(TableColumn.CellEditEvent<Patient, String> t) {
         try {
             dao.update(t.getRowValue());
-        } catch (SQLException e) {
+        } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
             e.printStackTrace();
         }
     }
@@ -158,7 +161,7 @@ public class AllPatientController {
             for (Patient p : allPatients) {
                 this.tableviewContent.add(p);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
             e.printStackTrace();
         }
     }
@@ -193,7 +196,7 @@ public class AllPatientController {
         try {
             Patient p = new Patient(firstname, surname, date, carelevel, room);
             dao.create(p);
-        } catch (SQLException e) {
+        } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
             e.printStackTrace();
 
         }

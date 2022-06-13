@@ -1,6 +1,7 @@
 package datastorage;
 
 import model.Treatment;
+import model.User;
 import utils.DateConverter;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -16,13 +17,14 @@ public class TreatmentDAO extends DAOimp<Treatment> {
     public TreatmentDAO(Connection conn) {
         super(conn);
     }
+    User user = new User();
 
     @Override
     protected String getCreateStatementString(Treatment treatment) {
-        return String.format("INSERT INTO treatment (pid, treatment_date, begin, end, description, remarks) VALUES " +
-                "(%d, '%s', '%s', '%s', '%s', '%s')", treatment.getPid(), treatment.getDate(),
+        return String.format("INSERT INTO treatment (pid, treatment_date, begin, end, description, remarks, uid) VALUES " +
+                "(%d, '%s', '%s', '%s', '%s', '%s', '%s')", treatment.getPid(), treatment.getDate(),
                 treatment.getBegin(), treatment.getEnd(), treatment.getDescription(),
-                treatment.getRemarks());
+                treatment.getRemarks(),user.getUid());
     }
 
     @Override
