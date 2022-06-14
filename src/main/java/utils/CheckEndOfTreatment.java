@@ -1,4 +1,4 @@
-package controller;
+package utils;
 
 import datastorage.ConnectionBuilder;
 import datastorage.DAOFactory;
@@ -23,7 +23,7 @@ public class CheckEndOfTreatment {
     /**
      * creates a job that runs every day and deletes locked data older than 30 years
      */
-    CheckEndOfTreatment(){
+    public CheckEndOfTreatment(){
         this.conn = ConnectionBuilder.getConnection();
         this.scheduler = Executors.newScheduledThreadPool(1);
 
