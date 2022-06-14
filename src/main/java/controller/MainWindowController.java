@@ -111,32 +111,34 @@ public class MainWindowController {
         HandleButtons(status);
     }
 
+    public boolean authentification(UserDAO dao, String id, String password){
+        try {
+            PreparedStatement passwordStatement = dao.getPasswordByUidStatementString(id);
+            ResultSet rs = passwordStatement.executeQuery();
+
+            if (rs.next()) {
+                return BCryptHashing.isValidPassword(password, rs.getString(1));
+            }
+        }catch(Exception e){
+            txtWrong.setVisible(true);
+        }
+        return false;
+    }
+
     public void handleLogin(ActionEvent actionEvent) throws SQLException {
 
         String tempId = txtId.getText();
         String tempPass = txtPassword.getText();
 
-        User user;
         boolean found = false;
 
         UserDAO userDAO = DAOFactory.getDAOFactory().createUserDAO();
-        try {
-            PreparedStatement passwordStatement = userDAO.getPasswordByUidStatementString(tempId);
-            ResultSet rs = passwordStatement.executeQuery();
 
-            if (rs.next()) {
-                found = BCryptHashing.isValidPassword(tempPass, rs.getString(1));
-            }
-        }catch(Exception e){
-            txtWrong.setVisible(true);
-        }
-
-        user = userDAO.readByUid(tempId);
-        UserSession userSession = UserSession.getInstance();
-        userSession.init(user);
-
-            if (found) {
+            if (authentification(userDAO, tempId, tempPass)) {
                 boolean status = false;
+                User user = userDAO.readByUid(tempId);
+                UserSession userSession = UserSession.getInstance();
+                userSession.init(user);
                 if(userSession.getPermissionLevel() == 1){
                     btnUser.setVisible(true);
                 }

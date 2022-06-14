@@ -53,6 +53,7 @@ public class Main extends Application {
     }
     public static void main(String[] args) {
         CheckEndOfTreatment job = new CheckEndOfTreatment();
+        job.executeJob();
         launch(args);
     }
 }

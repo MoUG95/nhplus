@@ -3,8 +3,7 @@ package utils;
 import datastorage.ConnectionBuilder;
 import datastorage.DAOFactory;
 import datastorage.PatientDAO;
-import utils.DateConverter;
-
+import datastorage.TreatmentDAO;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,7 +25,9 @@ public class CheckEndOfTreatment {
     public CheckEndOfTreatment(){
         this.conn = ConnectionBuilder.getConnection();
         this.scheduler = Executors.newScheduledThreadPool(1);
+    }
 
+    public void executeJob(){
         final ScheduledFuture<?> taskHandle = scheduler.scheduleAtFixedRate(
                 new Runnable() {
                     public void run() {
@@ -36,7 +37,7 @@ public class CheckEndOfTreatment {
                             e.printStackTrace();
                         }
                     }
-                }, 0, 1, TimeUnit.DAYS);
+                }, 0, 5, TimeUnit.SECONDS);
     }
 
     /**
@@ -47,15 +48,16 @@ public class CheckEndOfTreatment {
         Statement st = conn.createStatement();
         ResultSet result = st.executeQuery("SELECT pid, treatmentend FROM patient WHERE delflag is not null");
         if(!result.next()){
-            System.out.println("No patient-dataset is older than 30 years!");
+            System.out.println("There currently is no locked data.");
         } else {
             do {
                 if(checkIfOlderThan30years(DateConverter.convertStringToLocalDate(result.getString("treatmentend")))){
-                    st.executeUpdate(String.format("Delete FROM treatment WHERE pid = %d", result.getInt("pid")));
-                    st.executeUpdate(String.format("Delete FROM patient WHERE pid = %d", result.getInt("pid")));
+                    PatientDAO patientDAO = DAOFactory.getDAOFactory().createPatientDAO();
+                    patientDAO.deleteById(result.getInt("pid"));
+                    TreatmentDAO treatmentDAO = DAOFactory.getDAOFactory().createTreatmentDAO();
+                    treatmentDAO.deleteByPid(result.getInt("pid"));
                     System.out.println("Patient " + result.getString("pid") + " has been deleted.");
                 }
-
             } while (result.next());
         }
     }
