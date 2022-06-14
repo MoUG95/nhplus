@@ -11,15 +11,13 @@ import javafx.stage.Stage;
 import model.Caregiver;
 import model.Patient;
 import model.Treatment;
+import utils.CheckInputsForNull;
 import utils.DateConverter;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.List;
 
 public class NewTreatmentController {
     @FXML
@@ -81,11 +79,13 @@ public class NewTreatmentController {
         LocalTime end = DateConverter.convertStringToLocalTime(txtEnd.getText());
         String description = txtDescription.getText();
         String remarks = taRemarks.getText();
-        Treatment treatment = new Treatment(patient.getPid(), date,
-                begin, end, description, remarks, caregiver);
-        createTreatment(treatment);
-        controller.readAllAndShowInTableView();
-        stage.close();
+        if(CheckInputsForNull.checkInputsForNull(new Object[] {date, caregiver, begin, end, description, remarks})){
+            Treatment treatment = new Treatment(patient.getPid(), date,
+                    begin, end, description, remarks, caregiver);
+            createTreatment(treatment);
+            controller.readAllAndShowInTableView();
+            stage.close();
+        }
     }
 
 

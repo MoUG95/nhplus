@@ -13,6 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import model.Caregiver;
 import model.Patient;
+import utils.CheckInputsForNull;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -150,15 +151,16 @@ public class AllCaregiverController {
         String surname = this.txfSurname.getText();
         String firstname = this.txfFirstname.getText();
         String telephone = this.txfTelephone.getText();
-
-        try {
-            Caregiver c = new Caregiver(firstname, surname, telephone);
-            dao.create(c);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if(CheckInputsForNull.checkInputsForNull(new Object[] {surname, firstname, telephone})){
+            try {
+                Caregiver c = new Caregiver(firstname, surname, telephone);
+                dao.create(c);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            readAllAndShowInTableView();
+            clearTextfields();
         }
-        readAllAndShowInTableView();
-        clearTextfields();
     }
 
     /**

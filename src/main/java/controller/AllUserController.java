@@ -14,6 +14,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.IntegerStringConverter;
 import model.User;
 import model.UserSession;
+import utils.CheckInputsForNull;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -173,15 +174,17 @@ public class AllUserController {
         String firstname = this.txtFirstname.getText();
         int permissionLevel = this.intPermissionlevel.getValue();
         String password = this.txtPassword.getText();
-        try {
-            User u = new User(firstname, surname, permissionLevel, password);
-            dao.create(u);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if(CheckInputsForNull.checkInputsForNull(new Object[] {surname, firstname, permissionLevel, password})) {
+            try {
+                User u = new User(firstname, surname, permissionLevel, password);
+                dao.create(u);
+            } catch (SQLException e) {
+                e.printStackTrace();
 
+            }
+            readAllAndShowInTableView();
+            clearTextfields();
         }
-        readAllAndShowInTableView();
-        clearTextfields();
     }
 
     /**

@@ -111,7 +111,7 @@ public class MainWindowController {
         HandleButtons(status);
     }
 
-    public boolean authentification(UserDAO dao, String id, String password){
+    public boolean authentication(UserDAO dao, String id, String password){
         try {
             PreparedStatement passwordStatement = dao.getPasswordByUidStatementString(id);
             ResultSet rs = passwordStatement.executeQuery();
@@ -134,7 +134,7 @@ public class MainWindowController {
 
         UserDAO userDAO = DAOFactory.getDAOFactory().createUserDAO();
 
-            if (authentification(userDAO, tempId, tempPass)) {
+            if (authentication(userDAO, tempId, tempPass)) {
                 boolean status = false;
                 User user = userDAO.readByUid(tempId);
                 UserSession userSession = UserSession.getInstance();

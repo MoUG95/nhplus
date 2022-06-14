@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import model.Patient;
+import utils.CheckInputsForNull;
 import utils.DateConverter;
 import datastorage.DAOFactory;
 
@@ -192,14 +193,16 @@ public class AllPatientController {
         LocalDate date = DateConverter.convertStringToLocalDate(birthday);
         String carelevel = this.txtCarelevel.getText();
         String room = this.txtRoom.getText();
-        try {
-            Patient p = new Patient(firstname, surname, date, carelevel, room);
-            dao.create(p);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if(CheckInputsForNull.checkInputsForNull(new Object[] {surname, firstname, birthday, date, carelevel, room})) {
+            try {
+                Patient p = new Patient(firstname, surname, date, carelevel, room);
+                dao.create(p);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            readAllAndShowInTableView();
+            clearTextfields();
         }
-        readAllAndShowInTableView();
-        clearTextfields();
     }
 
     /**
