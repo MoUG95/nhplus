@@ -15,18 +15,26 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * The <code>CheckEndOfTreatment</code> logic is used to check the database for locked data that is older than 30 years
+ * and deletes it for DSGVO conformity
+ */
+
 public class CheckEndOfTreatment {
     final ScheduledExecutorService scheduler;
     Connection conn;
 
     /**
-     * creates a job that runs every day and deletes locked data older than 30 years
+     * constructor sets database connection and scheduler
      */
     public CheckEndOfTreatment(){
         this.conn = ConnectionBuilder.getConnection();
         this.scheduler = Executors.newScheduledThreadPool(1);
     }
 
+    /**
+     * creates a job that runs every day and deletes locked data older than 30 years
+     */
     public void executeJob(){
         final ScheduledFuture<?> taskHandle = scheduler.scheduleAtFixedRate(
                 new Runnable() {
@@ -37,7 +45,7 @@ public class CheckEndOfTreatment {
                             e.printStackTrace();
                         }
                     }
-                }, 0, 5, TimeUnit.SECONDS);
+                }, 0, 1, TimeUnit.DAYS);
     }
 
     /**

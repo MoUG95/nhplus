@@ -144,7 +144,7 @@ public class AllCaregiverController {
     }
 
     /**
-     * handles a add-click-event. Creates a caregiver and calls the create method in the {@link CaregiverDAO}
+     * handles an add-click-event. Creates a caregiver and calls the create method in the {@link CaregiverDAO}
      */
     @FXML
     public void handleAdd() {
