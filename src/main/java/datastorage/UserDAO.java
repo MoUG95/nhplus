@@ -44,7 +44,12 @@ public class UserDAO extends DAOimp<User>{
         return String.format("SELECT * FROM user WHERE uid = %d", key);
     }
 
-
+    /**
+     * generates a prepared statement to select the password for the user
+     * @param key
+     * @return PreparedStatement
+     * @throws SQLException
+     */
     public PreparedStatement getPasswordByUidStatementString(String key) throws SQLException {
         PreparedStatement ps = conn.prepareStatement("select password from User where uid = ? AND delflag is null");
         ps.setString(1, key);

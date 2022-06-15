@@ -1,5 +1,7 @@
 package model;
-
+/**
+ * Caregivers work in a nursing home and treat patients
+ */
 public class Caregiver extends Person {
     private long cid;
     private String telephoneNr;

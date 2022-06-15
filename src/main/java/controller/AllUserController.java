@@ -20,7 +20,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 import java.util.List;
-
+/**
+ * The <code>AllUserController</code> contains the entire logic of the user view. It determines which data is displayed and how to react to events.
+ */
 public class AllUserController {
 
     @FXML

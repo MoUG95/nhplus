@@ -1,6 +1,38 @@
 # NHPlus
 
+## Benutzername + Passwort
+
+Es gibt bisher zwei User mit unterschiedlichen Berechtigungen:
+
+Benutzer: 0, Passwort: 1111 (Quasi Administrator, kann alle anderen User sehen und neue User anlegen)
+
+Benutzer: 2, Passwort 2222 (User eines Pflegers, kann die User-Übersicht nicht sehen)
+
+
+
+## Features und Testfälle
+
+| Funktionalität                                           | Testfall                                                                                                                     | Status                                                                                                                                                             |
+| -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Login Implementierung                                    | TF1_: Einloggen                                                                                                              | Funktioniert                                                                                                                                                       |
+|                                                          | TF2_: Operationen ausführen, die nur bestimmte Berechtigungen benötigen.                                                     | Zwei Berechtigungsstufen existieren. Stufe 1 kann User sehen und anlegen, Stufe 2 nicht.                                                                           |
+|                                                          | TF3_: Benutzerverwaltung für Admin-Nutzer.                                                                                   | Funktioniert                                                                                                                                                       |
+|                                                          | TF4_: Ausloggen.                                                                                                             | Funktioniert                                                                                                                                                       |
+| Entfernung Vermögensstand                                | TF1_: Vermögensstand wird nicht mehr in Patientenansicht aufgeführt und beim Anlegen neuer Patienten nicht mehr nachgefragt. | Vermögensstand wird nicht mehr abgefragt und wurde aus der Datenbank entnommen.                                                                                    |
+| Pfleger-Modul Implementierung                            | TF1_: „Pfleger/innen“-Button anzeigen.                                                                                       | Funktioniert                                                                                                                                                       |
+|                                                          | TF2_: Übersicht aller Pfleger.                                                                                               | Funktioniert                                                                                                                                                       |
+|                                                          | TF3_: Pfleger/innen können hinzugefügt / gelöscht werden.                                                                    | Funktioniert                                                                                                                                                       |
+|                                                          | TF4_: In der Behandlungsansicht werden die jeweiligen Pfleger mit angezeigt.                                                 | Funktioniert                                                                                                                                                       |
+|                                                          | TF5_: Beim Anlegen einer neuen Behandlung kann der ausführende Pfleger mittels ComboBox ausgewählt werden.                   | Funktioniert                                                                                                                                                       |
+| Behandlungsende markieren                                | TF1_: Behandlungsende bei Patient kann markiert werden.                                                                      | Funktioniert                                                                                                                                                       |
+| Automatische Sperrung der Daten nach Behandlungsende     | TF1_: Patientendaten werden nach Sperrung nicht mehr angezeigt.                                                              | Funktioniert                                                                                                                                                       |
+| Automatische Datenlöschung 30 Jahre nach Behandlungsende | TF1_: Gesperrte Daten werden nach 30 Jahren automatisch gelöscht.                                                            | Funktioniert                                                                                                                                                       |
+|                                                          | TF2_: Die Löschung beeinträchtigt nicht die Performance.                                                                     | Schwierig zu berurteilen, da der Job aber nur einmal am Tag ausgeführt wird und die Datenbank des Pflegeheims recht übersichtlich ist sagen wir mal: Funktioniert. |
+
+
+
 ## Informationen zur Lernsituation
+
 Du bist Mitarbeiter der HiTec GmbH, die seit über 15 Jahren IT-Dienstleister und seit einigen Jahren ISO/IEC 27001 zertifiziert ist. Die HiTec GmbH ist ein mittelgroßes IT-Systemhaus und ist auf dem IT-Markt mit folgenden Dienstleistungen und Produkten vetreten: 
 
 Entwicklung: Erstellung eigener Softwareprodukte
@@ -12,8 +44,6 @@ IT-Systembereich: Lieferung und Verkauf einzelner IT-Komponenten bis zur Planung
 Support und Wartung: Betreuung von einfachen und vernetzten IT-Systemen (Hard- und Software)
 
 Für jede Dienstleistung gibt es Abteilungen mit spezialisierten Mitarbeitern. Jede Abteilung hat einen Abteilungs- bzw. Projektleiter, der wiederum eng mit den anderen Abteilungsleitern zusammenarbeitet.
-
- 
 
 ## Projektumfeld und Projektdefinition
 
@@ -31,11 +61,7 @@ Bei den bisher stattgefundenen Meetings mit dem Kunden konnten folgende Anforder
 
 - Die Software ist zunächst als Desktopanwendung zu entwickeln, da die Pflegekräfte ihre Behandlungen an einem stationären Rechner in ihrem Aufenthaltsraum erfassen sollen.
 
- 
-
 Da in der Entwicklungsabteilung der HiTech GmbH agile Vorgehensweisen vorgeschrieben sind, wurde für NHPlus Scum als Vorgehensweise gewählt.
-
- 
 
 ## Stand des Projektes
 
